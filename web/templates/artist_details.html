@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Name}} - Groupie Trackers</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .artist-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .artist-image {
+            grid-column: 1 / 2;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .artist-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .info-box {
+            grid-column: 2 / 3;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h1 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.8em;
+        }
+
+        .info-box p {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .details-box {
+            grid-column: 1 / -1; /* Span across the full width below the image and info box */
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .details-box h2 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            color: #16a085;
+        }
+
+        .details-box ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .details-box ul li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            position: relative;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .details-box ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #16a085;
+            font-size: 1.5em;
+            line-height: 1;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #2c3e50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #16a085;
+        }
+
+        @media (max-width: 768px) {
+            .artist-container {
+                grid-template-columns: 1fr;
+            }
+
+            .artist-image {
+                grid-column: 1 / -1;
+            }
+
+            .info-box, .details-box {
+                grid-column: 1 / -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-button">Back to Home</a>
+    
+    <div class="artist-container">
+        <div class="artist-image">
+            <img src="{{.Image}}" alt="{{.Name}}">
+        </div>
+
+        <div class="info-box">
+            <h1>{{.Name}}</h1>
+            <p><strong>Creation Date:</strong> {{.CreationDate}}</p>
+            <p><strong>First Album:</strong> {{.FirstAlbum}}</p>
+        </div>
+
+        <div class="details-box">
+            <h2>Members</h2>
+            <ul>
+                {{range .Members}}
+                <li>{{.}}</li>
+                {{end}}
+            </ul>
+
+            <h2>Locations & Concert Dates</h2>
+            <ul>
+                {{range .LocationDetails}}
+                    <li>
+                        <strong>{{.}}:</strong>
+                        <ul>
+                            {{range index $.LocationConcerts .}}
+                            <li>{{.}}</li>
+                            {{end}}
+                        </ul>
+                    </li>
+                {{end}}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
