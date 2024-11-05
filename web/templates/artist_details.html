@@ -158,15 +158,16 @@
             <h2>Locations & Concert Dates</h2>
             <ul>
                 {{range .LocationDetails}}
-                    <li>
-                        <strong>{{.}}:</strong>
-                        <ul>
-                            {{range index $.LocationConcerts .}}
-                            <li>{{.}}</li>
-                            {{end}}
-                        </ul>
-                    </li>
-                {{end}}
+                <li>
+                    <strong>{{formatLocation .}}:</strong>
+                    <ul>
+                        {{range index $.LocationConcerts .}}
+                        <li>{{.}}</li>
+                        {{end}}
+                    </ul>
+                </li>
+            {{end}}
+            
             </ul>
         </div>
     </div>

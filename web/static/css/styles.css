@@ -1,98 +1,257 @@
-/* Existing styles for the main page */
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --accent-color: #e74c3c;
+  --background-color: #f5f6fa;
+  --text-color: #2c3e50;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
-h1 {
-    margin-top: 20px;
+.navbar {
+  background-color: var(--primary-color);
+  padding: 1rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
 }
 
-#artists-list {
-    width: 80%;
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+.search-container {
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.artist {
-    background-color: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+.search-input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 2px solid var(--secondary-color);
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
-.artist img {
-    max-width: 100%;
-    border-radius: 8px;
+.search-button, .search-clear {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  background: var(--secondary-color);
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.tooltip-text {
+  width: 200px;
+  padding: 10px;
+  line-height: 1.4;
+}
+
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 6rem 2rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.artist-card {
+  cursor: pointer;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.tooltip .tooltip-text {
+  visibility: hidden;
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.artist-card:hover {
+  transform: translateY(-5px);
+}
+
+.artist-card:focus {
+  outline: 3px solid var(--secondary-color);
+  transform: scale(1.02);
+}
+
+.artist-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.artist-info {
+  padding: 1.5rem;
 }
 
 .artist-name {
-    margin: 10px 0;
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
 }
 
-.artist-album {
-    font-size: 14px;
-    color: #555;
+.artist-details {
+  font-size: 0.9rem;
+  color: #666;
 }
 
-/* Additional styles for the error page */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  z-index: 1001;
+}
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Full screen height */
+.skip-link:focus {
+  top: 0;
+}
+
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+  border-color: var(--secondary-color);
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.message.success {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.message.error {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.breadcrumb {
+  padding: 1rem 2rem;
+  background: white;
+  margin-top: 60px;
+  width: 100%;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary-color);
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  display: none;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
 }
 
 .error-container {
-    text-align: center;
-    padding: 40px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px; /* Set a maximum width for better readability */
-    width: 100%;
-    box-sizing: border-box; /* Ensure padding doesn’t add to the element’s width */
+  text-align: center;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .error-container h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: #e74c3c;
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #e74c3c;
 }
 
 .error-container p {
-    font-size: 18px;
-    color: #333;
+  font-size: 18px;
+  color: #333;
 }
 
 .back-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
 .back-button:hover {
-    background-color: #2980b9;
+  background-color: #2980b9;
 }

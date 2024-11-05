@@ -10,6 +10,11 @@ import (
 	"strings"
 )
 
+type TemplateData struct {
+	Artists []api.Artist
+	Query   string
+}
+
 func main() {
 	mux := http.NewServeMux()
 
@@ -27,13 +32,24 @@ func main() {
 
 		// Fetch artists data to display on the main page
 		artists, err := api.FetchArtists("https://groupietrackers.herokuapp.com/api/artists")
+		// Search bar functionality
+		query := r.URL.Query().Get("search")
+		if query != "" {
+			filteredArtists := []api.Artist{}
+			for _, artist := range artists {
+				if containsIgnoreCase(artist.Name, query) {
+					filteredArtists = append(filteredArtists, artist)
+				}
+			}
+			artists = filteredArtists
+		}
 		if err != nil {
 			handlers.RenderErrorPage(w, "Error", "Failed to load artists. Please try again later.", http.StatusInternalServerError)
 			return
 		}
 
 		// Filter artists if a search query is present
-		query := r.URL.Query().Get("search")
+		query = r.URL.Query().Get("search")
 		if query != "" {
 			filteredArtists := []api.Artist{}
 			for _, artist := range artists {
@@ -51,8 +67,12 @@ func main() {
 			handlers.RenderErrorPage(w, "Internal Server Error", "An error occurred while loading the page. Please try again later.", http.StatusInternalServerError)
 			return
 		}
+		data := TemplateData{
+			Artists: artists,
+			Query:   query,
+		}
 
-		err = tmpl.Execute(w, artists) // Pass artists data to the template
+		err = tmpl.Execute(w, data) // Pass data to the template
 		if err != nil {
 			handlers.RenderErrorPage(w, "Internal Server Error", "An error occurred while rendering the page. Please try again later.", http.StatusInternalServerError)
 			log.Printf("Template execution error: %v", err)

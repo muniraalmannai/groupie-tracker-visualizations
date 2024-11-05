@@ -3,31 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groupie Trackers</title>
+    <title>Groupie Tracker</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Groupie Trackers</h1>
-    
-    <!-- Search bar -->
-    <form method="GET" action="/">
-        <input type="text" name="search" placeholder="Search artists...">
-        <button type="submit">Search</button>
-    </form>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Artists list -->
-    <div id="artists-list">
-        {{ if . }}
-            {{ range . }}
-            <div class="artist" onclick="window.location.href='/artists/{{.ID}}'">
-                <img src="{{.Image}}" alt="{{.Name}}">
-                <div class="artist-name">{{.Name}}</div>
-                <div class="artist-album">First Album: {{.FirstAlbum}}</div>
-            </div>
-            {{ end }}
-        {{ else }}
-            <p>No artists found.</p>
-        {{ end }}
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search artists..." aria-label="Search artists" value="{{.Query}}">
+            <button class="search-button" onclick="window.location.href='/?search=' + encodeURIComponent(document.querySelector('.search-input').value)">Search</button>
+            <button class="search-clear" onclick="window.location.href='/'">Clear</button>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <span>Home</span>
     </div>
+
+    <!-- Main content -->
+    <main id="main-content">
+        <div class="artists-grid">
+            {{range .Artists}}
+            <article class="artist-card" onclick="window.location.href='/artists/{{.ID}}'">
+                <div class="tooltip">
+                    <img src="{{.Image}}" alt="{{.Name}}" class="artist-image">
+                    <div class="tooltip-text">
+                        <h3>{{.Name}}</h3>
+                        <p>Members: {{range .Members}}{{.}}, {{end}}</p>
+                        <p>Creation Date: {{.CreationDate}}</p>
+                        <p>First Album: {{.FirstAlbum}}</p>
+                        <p>Click for more details</p>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h2 class="artist-name">{{.Name}}</h2>
+                    <div class="artist-details">
+                        <p>Creation Date: {{.CreationDate}}</p>
+                        <p>First Album: {{.FirstAlbum}}</p>
+                    </div>
+                </div>
+            </article>
+            {{end}}
+        </div>
+    </main>
+
+    <!-- Back to top button -->
+    <button class="back-to-top" aria-label="Back to top">↑</button>
+
+    <!-- Loading message -->
+    <div class="message" style="display: none;">Loading...</div>
+
+    <script>
+        window.onscroll = function() {
+            const button = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                button.style.display = 'block';
+            } else {
+                button.style.display = 'none';
+            }
+        };
+
+        document.querySelector('.back-to-top').onclick = function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+
+        document.querySelector('.search-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value;
+            window.location.href = `/?search=${encodeURIComponent(searchTerm)}`;
+        });
+    </script>
 </body>
 </html>

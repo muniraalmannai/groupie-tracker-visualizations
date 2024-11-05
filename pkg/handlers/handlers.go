@@ -8,7 +8,19 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
+
+func formatLocation(location string) string {
+	if location == "" {
+		return "Location Not Available"
+	}
+	words := strings.Split(strings.ReplaceAll(location, "_", "-"), "-")
+	for i, word := range words {
+		words[i] = strings.Title(word)
+	}
+	return strings.Join(words, " ")
+}
 
 // Function to render the custom error page with a status code
 func RenderErrorPage(w http.ResponseWriter, title string, message string, statusCode int) {
@@ -57,8 +69,7 @@ func HandleArtists(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(artists)
 }
 
-func HandleArtistByID(w http.ResponseWriter, r *http.Request, id int) bool { // Return true if an error occurred
-	// Check if the method is GET
+func HandleArtistByID(w http.ResponseWriter, r *http.Request, id int) bool {
 	if r.Method != http.MethodGet {
 		RenderErrorPage(w, "Method Not Allowed", "The method is not allowed for this resource.", http.StatusMethodNotAllowed)
 		return true
@@ -71,11 +82,14 @@ func HandleArtistByID(w http.ResponseWriter, r *http.Request, id int) bool { // 
 	if err != nil || artist == nil {
 		log.Printf("Artist not found or error fetching artist: %v", err)
 		RenderErrorPage(w, "Artist Not Found", "The artist you are looking for does not exist.", http.StatusNotFound)
-		return true // Error occurred
+		return true
 	}
 
-	tmpl, err := template.ParseFiles("web/templates/artist_details.html")
-	if err != nil { // Handle missing or misnamed template file
+	tmpl := template.New("artist_details.html").Funcs(template.FuncMap{
+		"formatLocation": formatLocation,
+	})
+	tmpl, err = tmpl.ParseFiles("web/templates/artist_details.html")
+	if err != nil {
 		log.Printf("Error parsing artist_details.html: %v", err)
 		RenderErrorPage(w, "Internal Server Error", "An error occurred while loading the page. Please try again later.", http.StatusInternalServerError)
 		return true
@@ -85,10 +99,10 @@ func HandleArtistByID(w http.ResponseWriter, r *http.Request, id int) bool { // 
 	if err != nil {
 		RenderErrorPage(w, "Internal Server Error", "An error occurred while rendering the artist details. Please try again later.", http.StatusInternalServerError)
 		log.Printf("Template execution error: %v", err)
-		return true // Error occurred
+		return true
 	}
 
-	return false // No error
+	return false
 }
 
 // New handler for invalid paths
