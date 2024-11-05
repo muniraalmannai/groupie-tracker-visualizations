@@ -11,8 +11,9 @@ import (
 )
 
 type TemplateData struct {
-	Artists []api.Artist
-	Query   string
+	Artists      []api.Artist
+	Query        string
+	IsSearchPage bool // Add this field
 }
 
 func main() {
@@ -73,8 +74,9 @@ func main() {
 			return
 		}
 		data := TemplateData{
-			Artists: artists,
-			Query:   query,
+			Artists:      artists,
+			Query:        query,
+			IsSearchPage: query != "",
 		}
 
 		err = tmpl.Execute(w, data) // Pass data to the template
