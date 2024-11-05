@@ -32,32 +32,40 @@ func main() {
 
 		// Fetch artists data to display on the main page
 		artists, err := api.FetchArtists("https://groupietrackers.herokuapp.com/api/artists")
+		for _, artist := range artists {
+			log.Printf("Artist: %s, Locations: %v", artist.Name, artist.LocationDetails)
+		}
 		// Search bar functionality
+		// Filter artists if a search query is present
 		query := r.URL.Query().Get("search")
 		if query != "" {
 			filteredArtists := []api.Artist{}
 			for _, artist := range artists {
+				// Search in artist name
 				if containsIgnoreCase(artist.Name, query) {
 					filteredArtists = append(filteredArtists, artist)
+					continue
 				}
+				// Search in members
+				for _, member := range artist.Members {
+					if containsIgnoreCase(member, query) {
+						filteredArtists = append(filteredArtists, artist)
+						break
+					}
+				}
+				// Search in locations
+				// for _, location := range artist.LocationDetails {
+				// 	if containsIgnoreCase(location, query) {
+				// 		filteredArtists = append(filteredArtists, artist)
+				// 		break
+				// 	}
+				// }
 			}
 			artists = filteredArtists
 		}
 		if err != nil {
 			handlers.RenderErrorPage(w, "Error", "Failed to load artists. Please try again later.", http.StatusInternalServerError)
 			return
-		}
-
-		// Filter artists if a search query is present
-		query = r.URL.Query().Get("search")
-		if query != "" {
-			filteredArtists := []api.Artist{}
-			for _, artist := range artists {
-				if containsIgnoreCase(artist.Name, query) {
-					filteredArtists = append(filteredArtists, artist)
-				}
-			}
-			artists = filteredArtists
 		}
 
 		// Render the main page with the artists data
