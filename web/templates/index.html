@@ -20,11 +20,12 @@
         {{end}}        
         </div>
     </nav>
+    <h1 class="page-title">Groupie Tracker</h1>
 
-    <!-- Breadcrumb -->
+    <!-- Breadcrumb
     <div class="breadcrumb">
         <span>Home</span>
-    </div>
+    </div> -->
 
     <!-- Main content -->
     <main id="main-content">
@@ -67,6 +68,15 @@
             } else {
                 button.style.display = 'none';
             }
+            window.onscroll = function() {
+    const navbar = document.querySelector('.navbar');
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        navbar.style.top = '0';
+    } else {
+        navbar.style.top = '80px';
+    }
+};
+
         };
 
         document.querySelector('.back-to-top').onclick = function() {

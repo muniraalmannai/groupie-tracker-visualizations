@@ -14,7 +14,9 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: var(--background-color);
+  background-image: url('/static/galaxy.jpg');
+  background-size: cover;
+  background-attachment: fixed;
   color: var(--text-color);
   line-height: 1.6;
   display: flex;
@@ -24,7 +26,7 @@ body {
 }
 
 .navbar {
-  background-color: var(--primary-color);
+  background-color: transparent;
   padding: 1rem 2rem;
   position: fixed;
   width: 100%;
@@ -44,26 +46,32 @@ body {
 .search-input {
   flex: 1;
   padding: 0.8rem;
-  border: 2px solid var(--secondary-color);
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid #aa04d4;
   border-radius: 25px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  color: white;
 }
 
-.search-button, .search-clear {
+.search-button {
   padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 25px;
-  background: var(--secondary-color);
+  background-color: #aa04d4;
   color: white;
   cursor: pointer;
   margin-left: 10px;
 }
 
-.tooltip-text {
-  width: 200px;
-  padding: 10px;
-  line-height: 1.4;
+.search-clear {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  background-color: #aa04d4;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 .artists-grid {
@@ -76,32 +84,12 @@ body {
 }
 
 .artist-card {
-  cursor: pointer;
-  background: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid #aa04d4;
+  box-shadow: 0 0 15px #aa04d4;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease;
-}
-.tooltip .tooltip-text {
-  visibility: hidden;
-  background-color: var(--primary-color);
-  color: white;
-  text-align: center;
-  padding: 15px;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.tooltip:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
 }
 
 .artist-card:hover {
@@ -126,12 +114,19 @@ body {
 .artist-name {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color: var(--primary-color);
+  color: white;
 }
 
 .artist-details {
   font-size: 0.9rem;
-  color: #666;
+  color: white;
+}
+
+.page-title {
+  color: white;
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 20px 0;
 }
 
 .skip-link {
@@ -154,8 +149,8 @@ body {
 }
 
 .search-input:focus {
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
-  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(170, 4, 212, 0.3);
+  border-color: #aa04d4;
 }
 
 .message {
@@ -176,16 +171,17 @@ body {
 
 .breadcrumb {
   padding: 1rem 2rem;
-  background: white;
+  background: transparent;
   margin-top: 60px;
   width: 100%;
+  color: white;
 }
 
 .back-to-top {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: var(--primary-color);
+  background: #aa04d4;
   color: white;
   padding: 10px;
   border-radius: 50%;
@@ -201,7 +197,7 @@ body {
 
 .tooltip .tooltip-text {
   visibility: hidden;
-  background-color: var(--primary-color);
+  background-color: rgba(0, 0, 0, 0.9);
   color: white;
   text-align: center;
   padding: 5px;
@@ -212,6 +208,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
+  border: 1px solid #aa04d4;
 }
 
 .tooltip:hover .tooltip-text {
@@ -221,31 +218,33 @@ body {
 .error-container {
   text-align: center;
   padding: 40px;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid #aa04d4;
+  box-shadow: 0 0 15px #aa04d4;
   max-width: 500px;
   width: 100%;
   box-sizing: border-box;
+  color: white;
 }
 
 .error-container h1 {
   font-size: 36px;
   margin-bottom: 20px;
-  color: #e74c3c;
+  color: #aa04d4;
 }
 
 .error-container p {
   font-size: 18px;
-  color: #333;
+  color: white;
 }
 
 .back-button {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #3498db;
-  color: #fff;
+  background-color: #aa04d4;
+  color: white;
   text-decoration: none;
   border-radius: 5px;
   font-size: 16px;
@@ -253,5 +252,5 @@ body {
 }
 
 .back-button:hover {
-  background-color: #2980b9;
+  background-color: #8a03ae;
 }

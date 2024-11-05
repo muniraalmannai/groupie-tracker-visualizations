@@ -32,9 +32,6 @@ func main() {
 
 		// Fetch artists data to display on the main page
 		artists, err := api.FetchArtists("https://groupietrackers.herokuapp.com/api/artists")
-		for _, artist := range artists {
-			log.Printf("Artist: %s, Locations: %v", artist.Name, artist.LocationDetails)
-		}
 		// Search bar functionality
 		// Filter artists if a search query is present
 		query := r.URL.Query().Get("search")
