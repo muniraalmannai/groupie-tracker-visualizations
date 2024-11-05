@@ -15,7 +15,9 @@
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Search artists..." aria-label="Search artists" value="{{.Query}}">
             <button class="search-button" onclick="window.location.href='/?search=' + encodeURIComponent(document.querySelector('.search-input').value)">Search</button>
+            {{if .Query}}
             <button class="search-clear" onclick="window.location.href='/'">Clear</button>
+        {{end}}        
         </div>
     </nav>
 
@@ -71,9 +73,18 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         };
 
-        document.querySelector('.search-input').addEventListener('input', function(e) {
-            const searchTerm = e.target.value;
-            window.location.href = `/?search=${encodeURIComponent(searchTerm)}`;
+let timeout;
+document.querySelector('.search-input').addEventListener('input', function(e) {
+    clearTimeout(timeout);
+    const searchInput = this;
+    const cursorPosition = searchInput.selectionStart;
+    timeout = setTimeout(function() {
+        const searchTerm = searchInput.value;
+        window.location.href = `/?search=${encodeURIComponent(searchTerm)}`;
+        searchInput.focus();
+        searchInput.setSelectionRange(cursorPosition, cursorPosition);
+    }, 1000);
+
         });
     </script>
 </body>
