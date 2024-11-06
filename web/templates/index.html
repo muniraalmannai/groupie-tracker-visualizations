@@ -68,13 +68,14 @@
                 button.style.display = isSearchPage ? 'none' : 'block';
             } else {
                 button.style.display = 'none';
-            }
-
-            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                navbar.style.top = '0';
-            } else {
                 navbar.style.top = '80px';
             }
+            //  // Moving search bar
+            // if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+            //     navbar.style.top = '0';
+            // } else {
+            //     navbar.style.top = '80px';
+            // }
         };
 
         document.querySelector('.back-to-top').onclick = function() {
