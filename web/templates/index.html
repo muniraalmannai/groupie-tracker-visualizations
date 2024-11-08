@@ -8,17 +8,6 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <nav class="navbar {{if .IsSearchPage}}navbar-search{{end}}">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search artists..." aria-label="Search artists" value="{{.Query}}">
-            <button class="search-button" onclick="window.location.href='/?search=' + encodeURIComponent(document.querySelector('.search-input').value)">Search</button>
-            {{if .Query}}
-            <button class="search-clear" onclick="window.location.href='/'">Clear</button>
-            {{end}}        
-        </div>
-    </nav>
-
     {{if not .IsSearchPage}}
     <h1 class="page-title">Groupie Tracker</h1>
     {{end}}
@@ -49,51 +38,6 @@
         </div>
     </main>
 
-    <button class="back-to-top" aria-label="Back to top">↑</button>
-
     <div class="message" style="display: none;">Loading...</div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const button = document.querySelector('.back-to-top');
-            button.style.display = 'none';
-        });
-
-        window.onscroll = function() {
-            const button = document.querySelector('.back-to-top');
-            const navbar = document.querySelector('.navbar');
-            const isSearchPage = document.querySelector('.navbar').classList.contains('navbar-search');
-
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                button.style.display = isSearchPage ? 'none' : 'block';
-            } else {
-                button.style.display = 'none';
-                navbar.style.top = '80px';
-            }
-            //  // Moving search bar
-            // if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-            //     navbar.style.top = '0';
-            // } else {
-            //     navbar.style.top = '80px';
-            // }
-        };
-
-        document.querySelector('.back-to-top').onclick = function() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        };
-
-        let timeout;
-        document.querySelector('.search-input').addEventListener('input', function(e) {
-            clearTimeout(timeout);
-            const searchInput = this;
-            const cursorPosition = searchInput.selectionStart;
-            timeout = setTimeout(function() {
-                const searchTerm = searchInput.value;
-                window.location.href = `/?search=${encodeURIComponent(searchTerm)}`;
-                searchInput.focus();
-                searchInput.setSelectionRange(cursorPosition, cursorPosition);
-            }, 1000);
-        });
-    </script>
 </body>
 </html>
