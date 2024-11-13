@@ -19,7 +19,7 @@ html {
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-image: url('/static/galaxy.jpg');
+  background-image: url('/static/images/galaxy.jpg');
   background-size: cover;
   background-attachment: fixed;
   color: var(--text-color);
