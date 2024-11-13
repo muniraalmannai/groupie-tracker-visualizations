@@ -31,7 +31,7 @@ The application allows users to:
 ├── go.mod               # Module dependencies and package management
 ├── static/              # Contains static assets like images
 │   └── images/
-│       └── request_flow.png  # Image file for request flow graph
+│       └── graph.png    # Image file for request flow graph
 ```
 
 ## Technologies Used
