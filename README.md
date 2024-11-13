@@ -29,6 +29,9 @@ The application allows users to:
 ├── artist_details.html  # Detailed view template for individual artists
 ├── error.html           # Error page template
 ├── go.mod               # Module dependencies and package management
+├── static/              # Contains static assets like images
+│   └── images/
+│       └── request_flow.png  # Image file for request flow graph
 ```
 
 ## Technologies Used
@@ -37,6 +40,22 @@ The application allows users to:
 - **Frontend:** HTML, CSS (Flexbox, Grid Layout)
 - **Styling:** Custom CSS with theming and responsive design
 - **Templating:** Go's `html/template` for server-side rendering
+
+### Request Flow Diagram
+
+Below is a visual representation of the route flow for a user request in the Groupie Tracker application:
+
+![Request Flow Diagram](static/images/graph.png)
+
+### Explanation
+
+1. **User Request**: The user makes a request (e.g., clicks an artist card).
+2. **Go Backend**: The request is received and processed by the backend.
+3. **`client.go (API Fetch)`**: The backend fetches data from an external API.
+4. **API**: The data is retrieved and sent back to `client.go`.
+5. **`handlers.go (Data Processing)`**: Processes the data, utilizing data structures defined in **`types.go`**.
+6. **Template Rendering**: The processed data is rendered into an HTML template (`index.html`, `artist_details.html`, or `error.html`).
+7. **Browser (Display)**: The rendered HTML is sent back to the user’s browser for display.
 
 ### Installation
 
@@ -94,4 +113,4 @@ This project was developed with a focus on clean code and modular design. The Go
 
 ## License
 
-This project was completed as part of a coursework assignment at a coding institute.
+This project was completed as part of a coursework assignment at Reboot01.
