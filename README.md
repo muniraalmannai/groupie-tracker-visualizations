@@ -21,17 +21,29 @@ The application allows users to:
 ## File Structure
 
 ```
-├── client.go            # Handles client-side requests and API interactions
-├── handlers.go          # Contains the main HTTP handlers for routing
-├── types.go             # Defines data structures used across the application
-├── styles.css           # Main CSS file for styling and responsive design
-├── index.html           # Main page listing all artists
-├── artist_details.html  # Detailed view template for individual artists
-├── error.html           # Error page template
-├── go.mod               # Module dependencies and package management
-├── static/              # Contains static assets like images
-│   └── images/
-│       └── graph.png    # Image file for request flow graph
+├── cmd/server/               # Main entry point of the application
+│   └── main.go
+├── pkg/
+│   ├── api/                  # API client for fetching data
+│   │   ├── client.go
+│   │   └── types.go
+│   └── handlers/             # HTTP request handlers
+│       └── handlers.go
+├── web/
+│   ├── static/               # Static assets (CSS, images)
+│   │   ├── css/
+│   │   │   └── styles.css
+│   │   └── images/
+│   │       ├── graph.png
+│   │       └── galaxy.jpg
+│   └── templates/            # HTML templates
+│       ├── artist_details.html
+│       ├── error.html
+│       └── index.html
+├── .gitignore
+├── go.mod
+├── go.sum
+└── README.md
 ```
 
 ## Technologies Used
@@ -45,7 +57,7 @@ The application allows users to:
 
 Below is a visual representation of the route flow for a user request in the Groupie Tracker application:
 
-![Request Flow Diagram](static/images/graph.png)
+![Request Flow Diagram](web/static/images/graph.png)
 
 ### Explanation
 
